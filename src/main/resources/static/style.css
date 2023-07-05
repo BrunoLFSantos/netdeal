@@ -1,0 +1,26 @@
+.container{
+    border: ridge;
+    border-width: 2px;
+    padding: 10px 10px 10px 10px;
+    text-align: center;
+    margin-bottom: 15px;
+    width: 75%;
+    margin-inline: auto;
+}
+input, select, button{
+    border-radius: 8px;
+}
+button{
+    margin: 10px 10px 10px 10px;
+}
+li{
+    text-align: initial;
+}
+body{
+    background: aliceblue;
+}
+table, th, td {
+  border:1px solid black;
+  background: #ffffff;
+  margin-bottom: 25px;
+}
