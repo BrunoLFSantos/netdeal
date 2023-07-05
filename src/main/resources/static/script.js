@@ -22,8 +22,16 @@ function cadastrar (){
         })
     })
     .then(function (res) {console.log("teste" + res);})
-    .catch(function (res) {console.log(res)})
+    .catch(function (res) {console.log(res)});
 };
+
+var botao = document.querySelector("#cadastro");
+function botaoHandler(event){
+    console.log("Botão Clicado!");
+    cadastrar();
+    limpar();
+}
+botao.addEventListener('click',botaoHandler);
 
 function listar (){
     fetch("http://localhost:8080/colaboradores")
@@ -58,10 +66,5 @@ function limpar(){
     Itelefone.value = "";
     Icargo.value = "";
 }
-
-const form = document.getElementById('form');
-form.addEventListener('submit', function(){
-    cadastrar();
-});
 
 listar();

@@ -10,7 +10,7 @@
 input, select, button{
     border-radius: 8px;
 }
-button{
+#cadastro{
     margin: 10px 10px 10px 10px;
 }
 li{

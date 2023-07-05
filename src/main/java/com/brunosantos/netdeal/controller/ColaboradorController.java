@@ -3,7 +3,6 @@ package com.brunosantos.netdeal.controller;
 import com.brunosantos.netdeal.dto.ColaboradorDto;
 import com.brunosantos.netdeal.model.ForcaSenha;
 import com.brunosantos.netdeal.service.ColaboradorService;
-import io.swagger.annotations.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import java.net.URI;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/colaboradores")
-@Api(value = "Colaboradores")
 public class ColaboradorController {
 
     private final PasswordEncoder passwordEncoder;
@@ -32,7 +30,6 @@ public class ColaboradorController {
     }
 
     @GetMapping
-    @ApiOperation(value = "Mostra lista de colaboradores")
     public Page<ColaboradorDto> listColaborador(@PageableDefault(size = 10)Pageable pageable) {
         return colaboradorService.findAll(pageable);
     }
@@ -73,23 +70,20 @@ public class ColaboradorController {
         return colaboradorDto;
     }
     @PostMapping
-    @ApiOperation(value = "Cadastra um colaborador")
-    public ResponseEntity<ColaboradorDto> registerColaborador(@ApiParam(name = "colaborador", value = "Colaborador a ser cadastrado") @RequestBody @Valid ColaboradorDto colaboradorDto, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity<ColaboradorDto> registerColaborador(@RequestBody @Valid ColaboradorDto colaboradorDto, UriComponentsBuilder uriComponentsBuilder){
         colaboradorDto = validarSenha(colaboradorDto);
         ColaboradorDto colaboradorDtoRegister = colaboradorService.createColaborador(colaboradorDto);
         URI cargo = uriComponentsBuilder.path("/colaboradores/{id}").buildAndExpand(colaboradorDtoRegister.getId()).toUri();
         return ResponseEntity.created(cargo).body(colaboradorDtoRegister);
     }
     @PutMapping("/{id}")
-    @ApiOperation(value = "Atualiza um colaborador")
-    public ResponseEntity<ColaboradorDto> updateColaborador(@ApiParam(name = "id", value = "id do colaborador a ser atualizado") @PathVariable @NotNull Long id, @RequestBody @Valid @ApiParam(name = "colaborador", value = "Colaborador a ser alualizado") ColaboradorDto colaboradorDto){
+    public ResponseEntity<ColaboradorDto> updateColaborador(@PathVariable @NotNull Long id, @RequestBody @Valid ColaboradorDto colaboradorDto){
         colaboradorDto = validarSenha(colaboradorDto);
         ColaboradorDto colaboradorDtoUpdate = colaboradorService.updateColaborador(id, colaboradorDto);
         return ResponseEntity.ok(colaboradorDtoUpdate);
     }
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Deleta um colaborador")
-    public ResponseEntity<ColaboradorDto> deleteColaborador(@ApiParam(name = "id", value = "id do colaborador a ser deletado") @PathVariable@NotNull Long id){
+    public ResponseEntity<ColaboradorDto> deleteColaborador(@PathVariable@NotNull Long id){
         colaboradorService.deleteColaborador(id);
         return ResponseEntity.noContent().build();
     }
